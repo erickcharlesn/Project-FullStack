@@ -4,7 +4,7 @@ import { BaseDatabase } from "./BaseDatabase";
 
     export class BandDatabase extends BaseDatabase {
 
-        private static TABLE_NAME = "NOME_TABELA_BANDAS_ELETROFY"
+        private static TABLE_NAME = "SONGFANS_TABELA_BANDAS_COM_GENRER"
         
         public async createBand(band: Band): Promise<void> {
         try {

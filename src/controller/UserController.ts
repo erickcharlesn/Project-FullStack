@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserInputDTO, LoginInputDTO} from "../model/User";
+import { UserInputDTO, LoginInputDTO, LoginInputNickDTO} from "../model/User";
 import { UserBusiness } from "../business/UserBusiness";
 import { BaseDatabase } from "../data/BaseDatabase";
 
@@ -10,6 +10,7 @@ export class UserController {
             const input: UserInputDTO = {
                 email: req.body.email,
                 name: req.body.name,
+                nickname: req.body.nickname,
                 password: req.body.password,
                 role: req.body.role
             }
@@ -35,8 +36,13 @@ export class UserController {
                 password: req.body.password
             };
 
+            const loginDataNick: LoginInputNickDTO = {
+                nickname: req.body.nickname,
+                password: req.body.password
+            };
+
             const userBusiness = new UserBusiness();
-            const token = await userBusiness.getUserByEmail(loginData);
+            const token = await userBusiness.getUserByEmail(loginData) || userBusiness.getUserByNickName(loginDataNick);
 
             res.status(200).send({ token });
 

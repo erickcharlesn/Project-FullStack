@@ -1,4 +1,4 @@
-import { UserInputDTO, LoginInputDTO } from "../model/User";
+import { UserInputDTO, LoginInputDTO, LoginInputNickDTO } from "../model/User";
 import { UserDatabase } from "../data/UserDatabase";
 import { IdGenerator } from "../services/IdGenerator";
 import { HashManager } from "../services/HashManager";
@@ -15,7 +15,7 @@ export class UserBusiness {
         const hashPassword = await hashManager.hash(user.password);
 
         const userDatabase = new UserDatabase();
-        await userDatabase.createUser(id, user.email, user.name, hashPassword, user.role);
+        await userDatabase.createUser(id, user.email, user.name, user.nickname, hashPassword, user.role);
 
         const authenticator = new Authenticator();
         const accessToken = authenticator.generateToken({ id, role: user.role });
@@ -27,6 +27,24 @@ export class UserBusiness {
 
         const userDatabase = new UserDatabase();
         const userFromDB = await userDatabase.getUserByEmail(user.email);
+
+        const hashManager = new HashManager();
+        const hashCompare = await hashManager.compare(user.password, userFromDB.getPassword());
+
+        const authenticator = new Authenticator();
+        const accessToken = authenticator.generateToken({ id: userFromDB.getId(), role: userFromDB.getRole() });
+
+        if (!hashCompare) {
+            throw new Error("Invalid Password!");
+        }
+
+        return accessToken;
+    }
+
+    async getUserByNickName(user: LoginInputNickDTO) {
+
+        const userDatabase = new UserDatabase();
+        const userFromDB = await userDatabase.getUserByNickName(user.nickname);
 
         const hashManager = new HashManager();
         const hashCompare = await hashManager.compare(user.password, userFromDB.getPassword());

@@ -2,6 +2,7 @@ export class User{
     constructor(
     private id: string,
     private name: string,
+    private nickname: string,
     private email: string,
     private password: string,
     private role: UserRole
@@ -13,6 +14,10 @@ export class User{
 
     getName(){
         return this.name
+    }
+
+    getNickName(){
+        return this.nickname
     }
 
     getEmail(){
@@ -33,6 +38,10 @@ export class User{
 
     setName(name: string){
         this.name = name;
+    }
+
+    setNickName(nickname: string){
+        this.nickname = nickname;
     }
 
     setEmail(email: string){
@@ -59,7 +68,7 @@ export class User{
     }
 
     static toUserModel(user: any): User {
-        return new User(user.id, user.name, user.email, user.password, User.stringToUserRole(user.role));
+        return new User(user.id, user.name, user.nickname, user.email, user.password, User.stringToUserRole(user.role));
       }
 
 
@@ -69,6 +78,7 @@ export interface UserInputDTO{
     email: string;
     password: string;
     name: string;
+    nickname: string;
     role: string;
 }
 
@@ -76,6 +86,12 @@ export interface LoginInputDTO{
     email: string;
     password: string;
 }
+
+export interface LoginInputNickDTO{
+    nickname: string;
+    password: string;
+}
+
 
 export enum UserRole{
     NORMAL = "NORMAL",

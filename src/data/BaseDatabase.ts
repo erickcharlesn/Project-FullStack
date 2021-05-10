@@ -1,11 +1,10 @@
 import knex from "knex";
 
-
 export abstract class BaseDatabase {
 
-    private static connection: Knex | null = null;
+    private static connection: knex | null = null;
 
-    protected getConnection(): Knex{
+    protected getConnection(): knex{
         if(!BaseDatabase.connection){
             BaseDatabase.connection = knex({
                 client: "mysql",

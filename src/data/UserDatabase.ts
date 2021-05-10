@@ -3,12 +3,13 @@ import { User } from "../model/User";
 
 export class UserDatabase extends BaseDatabase {
 
-  private static TABLE_NAME = "NOME_TABELAS_USUÁRIOS_ELETROFY";
+  private static TABLE_NAME = "SONGFANS_TABELAS_USUÁRIOS";
 
   public async createUser(
     id: string,
     email: string,
     name: string,
+    nickname: string,
     password: string,
     role: string
   ): Promise<void> {
@@ -18,6 +19,7 @@ export class UserDatabase extends BaseDatabase {
           id,
           email,
           name,
+          nickname,
           password,
           role
         })
@@ -32,6 +34,15 @@ export class UserDatabase extends BaseDatabase {
       .select("*")
       .from(UserDatabase.TABLE_NAME)
       .where({ email });
+
+    return User.toUserModel(result[0]);
+  }
+
+  public async getUserByNickName (nickname: string): Promise<User> {
+    const result = await this.getConnection()
+      .select("*")
+      .from(UserDatabase.TABLE_NAME)
+      .where({ nickname });
 
     return User.toUserModel(result[0]);
   }
