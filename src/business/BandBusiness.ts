@@ -35,7 +35,7 @@ export class BandBusiness{
     async getBandDetailByIdOrName(input: string): Promise<Band> {
 
         if (!input){
-            throw new InvalidInputError("Entrada inválida para detalhes da banda")
+            throw new InvalidInputError("Entrada inválida para detalhes da bandaa")
         }
 
         return this.bandDatabase.getBandByIdOrNameFail(input)
