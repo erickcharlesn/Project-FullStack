@@ -1,6 +1,7 @@
-export abstract class BaseError extends Error {
-    constructor(message: string, public code: number) {
-      super(message);
-    }
+export class BaseError extends Error {
+  public readonly statusCode: number;
+  constructor(message: string, statusCode: number) {
+    super(message);
+    this.statusCode = statusCode;
   }
-  
+}

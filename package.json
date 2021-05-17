@@ -1,15 +1,17 @@
 {
-  "name": "project-fullstack",
+  "name": "project-fullstack-backend",
   "version": "1.0.0",
-  "description": "Backend do projeto Fullstack",
+  "description": "Backend do projeto FullStack Songfans",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./src/index.ts"
+    "test": "clear && echo \"Wait runing tests...\" && jest",
+    "dev": "clear && ts-node-dev ./src/index.ts",
+    "start": "tsc && node --inspect ./build/src/index.js"
   },
   "keywords": [
     "api",
-    "labook"
+    "labook",
+    "songfans"
   ],
   "author": "Erick",
   "license": "ISC",

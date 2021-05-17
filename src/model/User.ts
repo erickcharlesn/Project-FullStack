@@ -1,11 +1,11 @@
 export class User{
     constructor(
-    private id: string,
-    private name: string,
-    private nickname: string,
-    private email: string,
-    private password: string,
-    private role: UserRole
+    public readonly id: string,
+    public readonly name: string,
+    public readonly nickname: string,
+    public readonly email: string,
+    public readonly password: string,
+    public readonly role: UserRole
     ){}
 
     getId(){
@@ -32,29 +32,6 @@ export class User{
         return this.role;
     }
 
-    setId(id: string){
-        this.id = id;
-    }
-
-    setName(name: string){
-        this.name = name;
-    }
-
-    setNickName(nickname: string){
-        this.nickname = nickname;
-    }
-
-    setEmail(email: string){
-        this.email = email;
-    }
-
-    setPassword(password: string){
-        this.password = password;
-    }
-
-    setRole(role: UserRole){
-        this.role = role;
-    }
 
    static stringToUserRole(input: string): UserRole{
         switch (input) {
@@ -84,11 +61,6 @@ export interface UserInputDTO{
 
 export interface LoginInputDTO{
     email: string;
-    password: string;
-}
-
-export interface LoginInputNickDTO{
-    nickname: string;
     password: string;
 }
 

@@ -1,10 +1,18 @@
 import knex from "knex";
+import Knex from "knex";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export abstract class BaseDatabase {
 
-    private static connection: knex | null = null;
+    private static connection: Knex | null = null;
 
-    protected getConnection(): knex{
+    protected TABLE_NAME = {
+        users: "SONGFANS_TABELAS_USUÁRIOS",
+    }
+
+    protected getConnection(): Knex{
         if(!BaseDatabase.connection){
             BaseDatabase.connection = knex({
                 client: "mysql",
