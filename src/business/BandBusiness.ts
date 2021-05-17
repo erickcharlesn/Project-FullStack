@@ -17,11 +17,11 @@ export class BandBusiness{
         const tokenData = this.authenticator.getData(token)
 
         if (tokenData.role !== UserRole.ADMIN){
-            throw new UnauthorizedError("Only Admins can access this feature")
+            throw new UnauthorizedError("Somente Admins podem acessar")
         }
 
         if (!input.name || !input.mainGenre || !input.responsible) {
-            throw new InvalidInputError("Invalid input to register Band")
+            throw new InvalidInputError("Entrada inválida para registrar banda")
         }
 
         await this.bandDatabase.createBand(
@@ -35,7 +35,7 @@ export class BandBusiness{
     async getBandDetailByIdOrName(input: string): Promise<Band> {
 
         if (!input){
-            throw new InvalidInputError("Invalid input to getBandDetails")
+            throw new InvalidInputError("Entrada inválida para detalhes da bandaa")
         }
 
         return this.bandDatabase.getBandByIdOrNameFail(input)

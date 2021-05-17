@@ -2,49 +2,34 @@ import { BaseDatabase } from "./BaseDatabase";
 import { User } from "../model/User";
 
 export class UserDatabase extends BaseDatabase {
-
-  private static TABLE_NAME = "SONGFANS_TABELAS_USUÁRIOS";
-
-  public async createUser(
-    id: string,
-    email: string,
-    name: string,
-    nickname: string,
-    password: string,
-    role: string
-  ): Promise<void> {
+  public signup = async (user: User): Promise<void> => {
     try {
       await this.getConnection()
         .insert({
-          id,
-          email,
-          name,
-          nickname,
-          password,
-          role
+          id: user.id,
+          name: user.name,
+          nickname: user.nickname,
+          email: user.email,
+          password: user.password,
+          role: user.role,
         })
-        .into(UserDatabase.TABLE_NAME);
+        .into(this.TABLE_NAME.users);
     } catch (error) {
-      throw new Error(error.sqlMessage || error.message);
+      throw new Error(error.message || error.sqlMessage);
     }
-  }
+  };
 
-  public async getUserByEmail(email: string): Promise<User> {
-    const result = await this.getConnection()
-      .select("*")
-      .from(UserDatabase.TABLE_NAME)
-      .where({ email });
-
-    return User.toUserModel(result[0]);
-  }
-
-  public async getUserByNickName (nickname: string): Promise<User> {
-    const result = await this.getConnection()
-      .select("*")
-      .from(UserDatabase.TABLE_NAME)
-      .where({ nickname });
-
-    return User.toUserModel(result[0]);
-  }
-
+  public getUserByEmail = async (email: string): Promise<User> => {
+    try {
+      const result = await this.getConnection()
+        .select("*")
+        .from(this.TABLE_NAME.users)
+        .where({ email });
+      return User.toUserModel(result[0]);
+    } catch (error) {
+      throw new Error(error.message || error.sqlMessage);
+    }
+  };
 }
+
+export default new UserDatabase();
